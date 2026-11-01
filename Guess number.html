@@ -1,0 +1,52 @@
+<div id="app">
+   <h2>Guess Number (1 - 20)</h2>
+   <p>Enter your guess:
+     <input type="number" v-model="userGuess" min="1" max="20">
+     <button @click="checkGuess">Submit Guess</button>
+   </p >
+   <p>{{ hint }}</p >
+   <p>Number of guesses: {{ guess }}</p >
+   <button @click="newGame">New Game</button>
+ </div>
+
+ <script src="../vue2.js"></script>
+
+ <script>
+ new Vue({
+   el: '#app',
+   data() {
+     return {
+       Num: 0,
+       userGuess: '',
+       hint: '',
+       guessCount: 0
+     }
+   },
+   created() {
+     this.newGame()
+   },
+   methods: {
+     newGame() {
+       this.Num = Math.floor(Math.random() * 20) + 1
+       this.userGuess = ''
+       this.hint = ''
+       this.guessCount = 0
+     },
+     checkGuess() {
+       let num = Number(this.userGuess)
+       if (isNaN(num) || num < 1 || num > 20) {
+         this.hint = 'Please enter a number between 1 and 20!'
+         return
+       }
+       this.guessCount += 1
+       if (num > this.Num) {
+         this.hint = 'Too high.'
+       } else if (num < this.secretNum) {
+         this.hint = 'Too low.'
+       } else {
+         this.hint = 'Correct!'
+       }
+     }
+   }
+ })
+ </script>
